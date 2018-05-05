@@ -27,6 +27,7 @@ See the Torch installation documentation for more details. After Torch is instal
 $ luarocks install nngraph 
 $ luarocks install optim
 $ luarocks install nn
+$ luarocks install luautf8
 ```
 
 If you'd like to train on an NVIDIA GPU using CUDA (this can be to about 15x faster), you'll of course need the GPU, and you will have to install the [CUDA Toolkit](https://developer.nvidia.com/cuda-toolkit). Then get the `cutorch` and `cunn` packages:

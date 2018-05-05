@@ -19,6 +19,8 @@ require 'nngraph'
 require 'optim'
 require 'lfs'
 
+utf8 = require 'lua-utf8'
+
 require 'util.OneHot'
 require 'util.misc'
 local CharSplitLMMinibatchLoader = require 'util.CharSplitLMMinibatchLoader'

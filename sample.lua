@@ -14,6 +14,8 @@ require 'nngraph'
 require 'optim'
 require 'lfs'
 
+utf8 = require 'lua-utf8'
+
 require 'util.OneHot'
 require 'util.misc'
 
@@ -113,9 +115,9 @@ local seed_text = opt.primetext
 if string.len(seed_text) > 0 then
     gprint('seeding with ' .. seed_text)
     gprint('--------------------------')
-    for c in seed_text:gmatch'.' do
+    for p, c in utf8.codes(seed_text) do
         prev_char = torch.Tensor{vocab[c]}
-        io.write(ivocab[prev_char[1]])
+        io.write(utf8.char(ivocab[prev_char[1]]))
         if opt.gpuid >= 0 and opt.opencl == 0 then prev_char = prev_char:cuda() end
         if opt.gpuid >= 0 and opt.opencl == 1 then prev_char = prev_char:cl() end
         local lst = protos.rnn:forward{prev_char, unpack(current_state)}
@@ -155,7 +157,7 @@ for i=1, opt.length do
     for i=1,state_size do table.insert(current_state, lst[i]) end
     prediction = lst[#lst] -- last element holds the log probabilities
 
-    io.write(ivocab[prev_char[1]])
+    io.write(utf8.char(ivocab[prev_char[1]]))
 end
 io.write('\n') io.flush()
 
